@@ -13,21 +13,22 @@
 ;; Shape parameters ;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
-(def nrows 4)
-(def ncols 5)
+(def nrows 5)
+(def ncols 7)
 
 (def α (/ π 12))                        ; curvature of the columns
 (def β (/ π 36))                        ; curvature of the rows
 (def centerrow (- nrows 3))             ; controls front-back tilt
 (def centercol 3)                       ; controls left-right tilt / tenting (higher number is more tenting)
+(def column-y-offset 1)                       ; shift middle finger column
 (def tenting-angle (/ π 12))            ; or, change this for more precise tenting control
 (def column-style 
   (if (> nrows 5) :orthographic :standard))  ; options include :standard, :orthographic, and :fixed
 ; (def column-style :fixed)
 
 (defn column-offset [column] (cond
-  (= column 2) [0 2.82 -4.5]
-  (>= column 4) [0 -12 5.64]            ; original [0 -5.8 5.64]
+  (= column (+ 3 column-y-offset)) [0 2.82 -4.5]
+  (>= column (+ 5 column-y-offset)) [0 -12 5.64]            ; original [0 -5.8 5.64]
   :else [0 0 0]))
 
 (def thumb-offsets [6 -3 7])
@@ -216,7 +217,7 @@
   (apply union
          (for [column columns
                row rows
-               :when (or (.contains [2 3] column)
+               :when (or (.contains [(+ 2 column-y-offset) (+ 3 column-y-offset)] column)
                          (not= row lastrow))]
            (->> single-plate
                 (key-place column row)))))
@@ -225,7 +226,7 @@
   (apply union
          (for [column columns
                row rows
-               :when (or (.contains [2 3] column)
+               :when (or (.contains [(+ 2 column-y-offset) (+ 3 column-y-offset)] column)
                          (not= row lastrow))]
            (->> (sa-cap (if (= column 5) 1 1))
                 (key-place column row)))))
