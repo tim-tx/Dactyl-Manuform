@@ -27,8 +27,8 @@
 ; (def column-style :fixed)
 
 (defn column-offset [column] (cond
-  (= column (+ 3 column-y-offset)) [0 2.82 -4.5]
-  (>= column (+ 5 column-y-offset)) [0 -12 5.64]            ; original [0 -5.8 5.64]
+  (= column (+ 2 column-y-offset)) [0 2.82 -4.5]
+  (>= column (+ 4 column-y-offset)) [0 -12 5.64]            ; original [0 -5.8 5.64]
   :else [0 0 0]))
 
 (def thumb-offsets [6 -3 7])
