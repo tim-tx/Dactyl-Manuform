@@ -13,14 +13,14 @@
 ;; Shape parameters ;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
-(def nrows 4)
-(def ncols 5)
-(def column-x-offset 0)                       ; shift middle finger column
+(def nrows 5)
+(def ncols 7)
+(def column-x-offset 1)                       ; shift middle finger column
 
 (def α (/ π 12))                        ; curvature of the columns
 (def β (/ π 36))                        ; curvature of the rows
 (def centerrow (- nrows 3))             ; controls front-back tilt
-(def centercol 3)                       ; controls left-right tilt / tenting (higher number is more tenting)
+(def centercol 5)                       ; controls left-right tilt / tenting (higher number is more tenting)
 (def tenting-angle (/ π 12))            ; or, change this for more precise tenting control
 (def column-style 
   (if (> nrows 5) :orthographic :standard))  ; options include :standard, :orthographic, and :fixed
@@ -34,7 +34,7 @@
 (def column-angle (* β (- centercol (+ 2 column-x-offset))))
 ;; (def column-x-delta (* column-radius (Math/sin column-angle)))
 (def thumb-x-offset 0)
-(def thumb-offsets [6 -3 7])
+(def thumb-offsets [(+ 6 (* 20 colum-x-offset)) -3 (+ 7 (* -10 column-x-offset))])
 
 (def keyboard-z-offset 9)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
@@ -553,7 +553,7 @@
    (wall-brace thumb-mr-place  0 -1 web-post-bl thumb-br-place  0 -1 web-post-br)
    (wall-brace thumb-ml-place  0  1 web-post-tl thumb-bl-place  0  1 web-post-tr)
    (wall-brace thumb-bl-place -1  0 web-post-bl thumb-br-place -1  0 web-post-tl)
-   (wall-brace thumb-tr-place  0 -1 thumb-post-br (partial key-place 3 lastrow)  0 -1 web-post-bl)
+   (wall-brace thumb-tr-place  0 -1 thumb-post-br (partial key-place (+ 3 column-x-offset) lastrow)  0 -1 web-post-bl)
    ; clunky bit on the top left thumb connection  (normal connectors don't work well)
    (bottom-hull
      (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
@@ -576,7 +576,7 @@
      (left-key-place cornerrow -1 web-post)
      (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
      (key-place 0 cornerrow web-post-bl)
-     (key-place (+ 0 column-x-offset) cornerrow (translate (wall-locate1 -1 0) web-post-bl))
+     (key-place (+ 0 column-x-offset) cornerrow (translate (wall-locate1 (+ -1 column-x-offset) 0) web-post-bl))
      (thumb-tl-place thumb-post-tl))
    (hull
      (thumb-ml-place web-post-tr)
