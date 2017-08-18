@@ -13,24 +13,27 @@
 ;; Shape parameters ;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
-(def nrows 5)
-(def ncols 7)
+(def nrows 4)
+(def ncols 5)
+(def column-x-offset 0)                       ; shift middle finger column
 
 (def α (/ π 12))                        ; curvature of the columns
 (def β (/ π 36))                        ; curvature of the rows
 (def centerrow (- nrows 3))             ; controls front-back tilt
 (def centercol 3)                       ; controls left-right tilt / tenting (higher number is more tenting)
-(def column-y-offset 1)                       ; shift middle finger column
 (def tenting-angle (/ π 12))            ; or, change this for more precise tenting control
 (def column-style 
   (if (> nrows 5) :orthographic :standard))  ; options include :standard, :orthographic, and :fixed
 ; (def column-style :fixed)
 
 (defn column-offset [column] (cond
-  (= column (+ 2 column-y-offset)) [0 2.82 -4.5]
-  (>= column (+ 4 column-y-offset)) [0 -12 5.64]            ; original [0 -5.8 5.64]
+  (= column (+ 2 column-x-offset)) [0 2.82 -4.5]
+  (>= column (+ 4 column-x-offset)) [0 -12 5.64]            ; original [0 -5.8 5.64]
   :else [0 0 0]))
 
+(def column-angle (* β (- centercol (+ 2 column-x-offset))))
+;; (def column-x-delta (* column-radius (Math/sin column-angle)))
+(def thumb-x-offset 0)
 (def thumb-offsets [6 -3 7])
 
 (def keyboard-z-offset 9)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
@@ -217,7 +220,7 @@
   (apply union
          (for [column columns
                row rows
-               :when (or (.contains [(+ 2 column-y-offset) (+ 3 column-y-offset)] column)
+               :when (or (.contains [(+ 2 column-x-offset) (+ 3 column-x-offset)] column)
                          (not= row lastrow))]
            (->> single-plate
                 (key-place column row)))))
@@ -226,7 +229,7 @@
   (apply union
          (for [column columns
                row rows
-               :when (or (.contains [(+ 2 column-y-offset) (+ 3 column-y-offset)] column)
+               :when (or (.contains [(+ 2 column-x-offset) (+ 3 column-x-offset)] column)
                          (not= row lastrow))]
            (->> (sa-cap (if (= column 5) 1 1))
                 (key-place column row)))))
@@ -423,39 +426,39 @@
              (thumb-tr-place thumb-post-br)) 
       (triangle-hulls    ; top two to the main keyboard, starting on the left
              (thumb-tl-place thumb-post-tl)
-             (key-place 0 cornerrow web-post-bl)
+             (key-place (+ 0 column-x-offset) cornerrow web-post-bl)
              (thumb-tl-place thumb-post-tr)
-             (key-place 0 cornerrow web-post-br)
+             (key-place (+ 0 column-x-offset) cornerrow web-post-br)
              (thumb-tr-place thumb-post-tl)
-             (key-place 1 cornerrow web-post-bl)
+             (key-place (+ 1 column-x-offset) cornerrow web-post-bl)
              (thumb-tr-place thumb-post-tr)
-             (key-place 1 cornerrow web-post-br)
-             (key-place 2 lastrow web-post-tl)
-             (key-place 2 lastrow web-post-bl)
+             (key-place (+ 1 column-x-offset) cornerrow web-post-br)
+             (key-place (+ 2 column-x-offset) lastrow web-post-tl)
+             (key-place (+ 2 column-x-offset) lastrow web-post-bl)
              (thumb-tr-place thumb-post-tr)
-             (key-place 2 lastrow web-post-bl)
+             (key-place (+ 2 column-x-offset) lastrow web-post-bl)
              (thumb-tr-place thumb-post-br)
-             (key-place 2 lastrow web-post-br)
-             (key-place 3 lastrow web-post-bl)
-             (key-place 2 lastrow web-post-tr)
-             (key-place 3 lastrow web-post-tl)
-             (key-place 3 cornerrow web-post-bl)
-             (key-place 3 lastrow web-post-tr)
-             (key-place 3 cornerrow web-post-br)
-             (key-place 4 cornerrow web-post-bl))
+             (key-place (+ 2 column-x-offset) lastrow web-post-br)
+             (key-place (+ 3 column-x-offset) lastrow web-post-bl)
+             (key-place (+ 2 column-x-offset) lastrow web-post-tr)
+             (key-place (+ 3 column-x-offset) lastrow web-post-tl)
+             (key-place (+ 3 column-x-offset) cornerrow web-post-bl)
+             (key-place (+ 3 column-x-offset) lastrow web-post-tr)
+             (key-place (+ 3 column-x-offset) cornerrow web-post-br)
+             (key-place (+ 4 column-x-offset) cornerrow web-post-bl))
       (triangle-hulls 
-             (key-place 1 cornerrow web-post-br)
-             (key-place 2 lastrow web-post-tl)
-             (key-place 2 cornerrow web-post-bl)
-             (key-place 2 lastrow web-post-tr)
-             (key-place 2 cornerrow web-post-br)
-             (key-place 3 cornerrow web-post-bl)
+             (key-place (+ 1 column-x-offset) cornerrow web-post-br)
+             (key-place (+ 2 column-x-offset) lastrow web-post-tl)
+             (key-place (+ 2 column-x-offset) cornerrow web-post-bl)
+             (key-place (+ 2 column-x-offset) lastrow web-post-tr)
+             (key-place (+ 2 column-x-offset) cornerrow web-post-br)
+             (key-place (+ 3 column-x-offset) cornerrow web-post-bl)
              )
       (triangle-hulls 
-             (key-place 3 lastrow web-post-tr)
-             (key-place 3 lastrow web-post-br)
-             (key-place 3 lastrow web-post-tr)
-             (key-place 4 cornerrow web-post-bl))
+             (key-place (+ 3 column-x-offset) lastrow web-post-tr)
+             (key-place (+ 3 column-x-offset) lastrow web-post-br)
+             (key-place (+ 3 column-x-offset) lastrow web-post-tr)
+             (key-place (+ 4 column-x-offset) cornerrow web-post-bl))
   ))
 
 ;;;;;;;;;;
@@ -531,10 +534,10 @@
    (wall-brace (partial left-key-place 0 1) 0 1 web-post (partial left-key-place 0 1) -1 0 web-post)
    ; front wall
    (key-wall-brace lastcol 0 0 1 web-post-tr lastcol 0 1 0 web-post-tr)
-   (key-wall-brace 3 lastrow   0 -1 web-post-bl 3 lastrow 0.5 -1 web-post-br)
-   (key-wall-brace 3 lastrow 0.5 -1 web-post-br 4 cornerrow 1 -1 web-post-bl)
-   (for [x (range 4 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl x       cornerrow 0 -1 web-post-br))
-   (for [x (range 5 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
+   (key-wall-brace (+ 3 column-x-offset) lastrow   0 -1 web-post-bl (+ 3 column-x-offset) lastrow 0.5 -1 web-post-br)
+   (key-wall-brace (+ 3 column-x-offset) lastrow 0.5 -1 web-post-br (+ 4 column-x-offset) cornerrow 1 -1 web-post-bl)
+   (for [x (range (+ 4 column-x-offset) ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl x       cornerrow 0 -1 web-post-br))
+   (for [x (range (+ 5 column-x-offset) ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
    ; thumb walls
    (wall-brace thumb-mr-place  0 -1 web-post-br thumb-tr-place  0 -1 thumb-post-br)
    (wall-brace thumb-mr-place  0 -1 web-post-br thumb-mr-place  0 -1 web-post-bl)
@@ -573,7 +576,7 @@
      (left-key-place cornerrow -1 web-post)
      (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
      (key-place 0 cornerrow web-post-bl)
-     (key-place 0 cornerrow (translate (wall-locate1 -1 0) web-post-bl))
+     (key-place (+ 0 column-x-offset) cornerrow (translate (wall-locate1 -1 0) web-post-bl))
      (thumb-tl-place thumb-post-tl))
    (hull
      (thumb-ml-place web-post-tr)
