@@ -34,7 +34,7 @@
 (def column-angle (* β (- centercol (+ 2 column-x-offset))))
 ;; (def column-x-delta (* column-radius (Math/sin column-angle)))
 (def thumb-x-offset 0)
-(def thumb-offsets [(+ 6 (* 20 colum-x-offset)) -3 (+ 7 (* -10 column-x-offset))])
+(def thumb-offsets [(+ 6 (* 20 column-x-offset)) -3 (+ 7 (* -10 column-x-offset))])
 
 (def keyboard-z-offset 9)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
@@ -661,8 +661,8 @@
 
 (defn screw-insert-all-shapes [bottom-radius top-radius height]
   (union (screw-insert 0 0         bottom-radius top-radius height)
-         (screw-insert 0 lastrow   bottom-radius top-radius height)
-         (screw-insert 2 (+ lastrow 0.3)  bottom-radius top-radius height)
+         (screw-insert (- 0 (* 0.3 column-x-offset)) (+ lastrow -0.5)   bottom-radius top-radius height)
+         (screw-insert (+ 2 column-x-offset) (+ lastrow 0.3)  bottom-radius top-radius height)
          (screw-insert 3 0         bottom-radius top-radius height)
          (screw-insert lastcol 1   bottom-radius top-radius height)
          ))
