@@ -36,6 +36,16 @@ openscad -o things/right-6x6.stl things/right-6x6.scad >/dev/null 2>&1  &
 openscad -o things/left-6x6.stl  things/left-6x6.scad >/dev/null 2>&1 &
 git checkout src/dactyl_keyboard/dactyl.clj
 
+patch -p1 < 5x7-shifted.patch 
+lein run src/dactyl_keyboard/dactyl.clj
+cp things/right.scad things/right-5x7-shifted.scad
+cp things/left.scad things/left-5x7-shifted.scad
+cp things/right-plate.scad things/right-5x7-shifted--plate.scad
+openscad -o things/right-5x7-shifted-plate.dxf things/right-5x7-shifted-plate.scad >/dev/null 2>&1 &
+openscad -o things/right-5x7-shifted.stl things/right-5x7-shifted.scad >/dev/null 2>&1  &
+openscad -o things/left-5x7-shifted.stl  things/left-5x7-shifted.scad >/dev/null 2>&1 &
+git checkout src/dactyl_keyboard/dactyl.clj
+
 
 # git add things/*-4x5.stl
 # git add things/right-4x5-plate.dxf
