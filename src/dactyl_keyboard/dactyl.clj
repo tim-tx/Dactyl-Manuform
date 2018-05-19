@@ -592,8 +592,8 @@
                     (cube 10.1 8 18)
                                      )))
 
-(def usb-holder-position (key-position 1 0 (map + (wall-locate2 0 1) [0 (/ mount-height 2) 0])))
-(def usb-holder-size [6.5 10.0 13.6])
+(def usb-holder-position (key-position 1 0.085 (map + (wall-locate2 0 1) [0 (/ mount-height 2) 0])))
+(def usb-holder-size [6.5 8.0 13.6])
 (def usb-holder-thickness 4)
 (def usb-holder
     (->> (cube (+ (first usb-holder-size) usb-holder-thickness) (second usb-holder-size) (+ (last usb-holder-size) usb-holder-thickness))
