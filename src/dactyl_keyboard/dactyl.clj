@@ -669,29 +669,6 @@
 (def screw-insert-outers (screw-insert-all-shapes (+ screw-insert-bottom-radius 1.6) (+ screw-insert-top-radius 1.6) (+ screw-insert-height 1.5)))
 (def screw-insert-screw-holes  (screw-insert-all-shapes 1.7 1.7 350))
 
-(def wire-post-height 7)
-(def wire-post-overhang 3.5)
-(def wire-post-diameter 2.6)
-(defn wire-post [direction offset]
-   (->> (union (translate [0 (* wire-post-diameter -0.5 direction) 0] (cube wire-post-diameter wire-post-diameter wire-post-height))
-               (translate [0 (* wire-post-overhang -0.5 direction) (/ wire-post-height -2)] (cube wire-post-diameter wire-post-overhang wire-post-diameter)))
-        (translate [0 (- offset) (+ (/ wire-post-height -2) 3) ])
-        (rotate (/ α -2) [1 0 0])
-        (translate [3 (/ mount-height -2) 0])))
-
-(def wire-posts
-  (union
-     (thumb-ml-place (translate [-5 0 -2] (wire-post  1 0)))
-     (thumb-ml-place (translate [ 0 0 -2.5] (wire-post -1 6)))
-     (thumb-ml-place (translate [ 5 0 -2] (wire-post  1 0)))
-     (for [column (range 0 lastcol)
-           row (range 0 cornerrow)]
-       (union
-        (key-place column row (translate [-5 0 0] (wire-post 1 0)))
-        (key-place column row (translate [0 0 0] (wire-post -1 6)))
-        (key-place column row (translate [5 0 0] (wire-post  1 0)))))))
-
-
 (def model-right (difference 
                    (union
                     key-holes
@@ -706,7 +683,6 @@
                                 usb-holder-hole
                                 screw-insert-holes)
                     rj9-holder
-                    wire-posts
                     ; thumbcaps
                     ; caps
                     )
@@ -739,7 +715,6 @@
                     ;             teensy-screw-insert-outers
                     ;             usb-cutout 
                     ;             rj9-space 
-                                ; wire-posts
                   )))
 
 (spit "things/right-plate.scad"
