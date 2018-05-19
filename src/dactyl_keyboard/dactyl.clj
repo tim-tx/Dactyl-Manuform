@@ -677,7 +677,7 @@
                     thumb-connectors
                     (difference (union case-walls 
                                        screw-insert-outers 
-                                       teensy-holder
+                                       ; teensy-holder
                                        usb-holder)
                                 rj9-space 
                                 usb-holder-hole
