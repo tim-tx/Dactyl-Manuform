@@ -1,124 +1,58 @@
 # The Dactyl-ManuForm Keyboard
-This is a fork of the [Dactyl](https://github.com/adereth/dactyl-keyboard), a parameterized, split-hand, concave, columnar, ergonomic keyboard.
+This fork of [Dactyl-Manuform](https://github.com/tshort/dactyl-keyboard) consists some minor modifications to the design and a new build guide.
 
-![Imgur](http://i.imgur.com/LdjEhrR.jpg)
+I have also added the keyboard to the QMK firmware [Dactyl-Manuform QMK firmware](https://github.com/qmk/qmk_firmware/tree/master/keyboards/handwired/dactyl_manuform)
 
-The main change is that the thumb cluster was adapted from the [ManuForm keyboard](https://github.com/jeffgran/ManuForm) ([geekhack](https://geekhack.org/index.php?topic=46015.0)). The walls were changed to just drop to the floor. The keyboard is paramaterized to allow adjusting the following: 
+![Imgur](https://i.imgur.com/7y0Vbyd.jpg)
 
-* Rows: 4 - 6 
-* Columns: 5 and up
-* Row curvature
-* Column curvature
-* Row tilt (tenting)
-* Column tilt
-* Column offsets
-* Height
+## Build guide
 
-I built a 4x5 version (40% size) for myself. The default has a bit more tenting than the Dactyl. See the following model files for configurations that may be most common:
+### Parts list
+> The parts in the list are for two sides of 4x5 keyboard.
+* [Arduino Pro-Micro](https://www.sparkfun.com/products/12640) 2x
+* [M3 x 3mm Heat-set inserts](https://www.amazon.com/uxcell-Female-Knurled-Threaded-Embedment/dp/B01IYWTCWW) 10x
+* [M3 wafer-head screws, 5mm](http://www.metricscrews.us/index.php?main_page=product_info&cPath=155_185&products_id=455) 10x
+* [6mm Copper tape](https://www.adafruit.com/product/1128)
+* [1N4148 diodes](https://www.amazon.com/gp/product/B00LQPY0Y0) 46x
+* [Cherry MX compatible keyswitchs]()
+* [Female RJ-9 connectors](https://www.amazon.com/Female-Telephone-Connector-Adapter-Wires/dp/B00N41BEQQ) 2x
+* [1.6mm 3:1 Heat Shrink tube]()
+* [RJ9 Telephone Modem Coil 9.3-Inch](https://www.amazon.com/Uxcell-Telephone-Modem-9-3-Inch-Landline/dp/B0055XMA0A) 1x
+* [5pin Female-Female jumperwire](https://www.sparkfun.com/products/10370) 2x
+* [1pin Female-Female jumperwire](https://www.amazon.com/uxcell-Female-Jumper-Cable-Wires/dp/B00D7SDDLU) 6x
 
-* [40% size, (4x5)](https://github.com/tshort/dactyl-keyboard/blob/master/things/right-4x5.stl)
-* [60% size, (5x6)](https://github.com/tshort/dactyl-keyboard/blob/master/things/right-5x6.stl)
+### Rows wiring
+First insert keyswitchs in place, make sure they are sturdy in place, glue them in place if they aren't.
+Take the copper tape and gently tape it over the rows internal keyswitch pins, be careful not to tear it, look at the picture below to see where each row follow in the thumb cluster keys.
+![Imgur](https://i.imgur.com/Qt7Pcpf.jpg)
+Now solder each one of the keyswitch pins to the copper tape.
+![Imgur](https://i.imgur.com/iVVmwpN.jpg)
 
+### Columns wiring
+To wire the columns we use the diods legs as wires connecting each one, follow the pictures below. cut and bend the diods as shown and solder the diods to the outer keyswitch pin.
+between each connection that goes over a copper tape insert a shrink tube to insulate and prevent circuit short.
+the diods should always be in the direction in the pictures (black strip opposite to the keyswitch pin)
+![Imgur](https://i.imgur.com/XBjySSH.jpg)
+![Imgur](https://i.imgur.com/06QiBQt.jpg)
+![Imgur](https://i.imgur.com/9ropMpG.jpg)
 
-## Assembly
+### RJ9 Jack wiring
+On one of the jacks solder the green, red and black wires each to a single pin jumper wire, on the other side solder the yellow wire instead of the black one.
 
-### Generating a Design
-
-**Setting up the Clojure environment**
-* [Install the Clojure runtime](https://clojure.org)
-* [Install the Leiningen project manager](http://leiningen.org/)
-* [Install OpenSCAD](http://www.openscad.org/)
-
-**Generating the design**
-* Run `lein repl`
-* Load the file `(load-file "src/dactyl_keyboard/dactyl.clj")`
-* This will regenerate the `things/*.scad` files
-* Use OpenSCAD to open a `.scad` file.
-* Make changes to design, repeat `load-file`, OpenSCAD will watch for changes and rerender.
-* When done, use OpenSCAD to export STL files
-
-**Tips**
-* [Some other ways to evaluate the clojure design file](http://stackoverflow.com/a/28213489)
-* [Example designing with clojure](http://adereth.github.io/blog/2014/04/09/3d-printing-with-clojure/)
-
-
-### Printing
-Pregenerated STL files are available in the [things/](things/) directory. 
-When a model is generated, it also generates a `.scad` model for a bottom plate. 
-This can be exported to a DXF file in OpenSCAD.
-The [things/](things/) directory also has DXF files for the bottom plate.
-When laser cut, some of the inside cuts will need to be removed. 
-
-This model can be tricky to print. 
-It's wide, so I've had problems with PLA on a Makerbot with edges warping. 
-This can cause the printer to think its head is jammed. 
-Even if it successfully prints, warping can cause problems. 
-On one print, the RJ-9 holder was squished, so I had to cut down my connector to fit.
-
-If printed at Shapeways or other professional shops, I would not expect such problems. 
-
-### Thingiverse
-
-[The 4x5 STL left/right pair](https://www.thingiverse.com/thing:2349390) from the [things/](things/) directory is in the thingiverse for public printing
-
-### Wiring
-
-Here are materials I used for wiring.
-
-* Two Arduino Pro Micros
-* [Heat-set inserts](https://www.mcmaster.com/#94180a331/=16yfrx1)
-* [M3 wafer-head screws, 5mm](http://www.metricscrews.us/index.php?main_page=product_info&cPath=155_185&products_id=455)
-* [Copper tape](https://www.amazon.com/gp/product/B009KB86BU)
-* [#32 magnet wire](https://www.amazon.com/gp/product/B00LV909HI)
-* [#30 wire](https://www.amazon.com/gp/product/B00GWFECWO)
-* [3-mm cast acrylic](http://www.mcmaster.com/#acrylic/=144mfom)
-* [Veroboard stripboard](https://www.amazon.com/gp/product/B008CPVMMU)
-* [1N4148 diodes](https://www.amazon.com/gp/product/B00LQPY0Y0)
-* [Female RJ-9 connectors](https://www.amazon.com/gp/product/B01HU7BVDU/)
-
-I wired one half using the traditional approach of using the legs of a diode to form the row connections. 
-(I'm not great at soldering, so this was challenging for me.)
-For this side, I used magnet wire to wire columns. That worked okay. 
-The magnet wire is small enough, it wants to move around, and it's hard to tell if you have a good connection.
-
-![Imgur](http://i.imgur.com/7kPvSgg.jpg)
-
-For another half, I used stripboard for the row connections. 
-This allowed me to presolder all of the diodes. 
-Then, I hot-glued this in place and finished the soldering of the other diode ends. 
-I like this approach quite a lot. 
-Connections for the diodes were much easier with one end fixed down. 
-On this half, I also used copper tape to connect columns. 
-This worked a bit better than the magnet wire for me. 
-For a future version, I may try just bare tinned copper wire for columns (something like #20). 
-With the stripboard, it's pretty easy keeping row and column connections separate.
-
-![Imgur](http://i.imgur.com/JOm5ElP.jpg)
-
-Note that a telephone handset cable has leads that are reversed, so take this into account when connecting these leads to the controller.
-
-The 3D printed part is the main keyboard. 
-You can attach a bottom plate with screws. 
-The case has holes for heat-set inserts designed to hold 3- to 6-mm long M3 screws. 
-Then, I used wafer-head screws to connect a bottom plate. 
-If wires aren't dangling, a bottom plate may not be needed. 
-You need something on the bottom to keep the keyboard from sliding around. 
-Without a plate, you could use a rubber pad, or you could dip the bottom of the keyboard in PlastiDip.
-
-For more photos of the first complete wiring of v0.4, see [Imgur](http://imgur.com/a/v9eIO).
-
-This is how the rows/columns wire to the keys and the ProMicro
-![Wire Diagram](https://docs.google.com/drawings/d/1s9aAg5bXBrhtb6Xw-sGOQQEndRNOqpBRyUyHkgpnSps/pub?w=1176&h=621)
+insert the jack inside the case, you will need to cut the jack a little bit to make it fit.
 
 
-#### Alternative row-driven wiring diagram for ProMicro:
+### Jumper wires wiring
+Cut the 5pin jumperwire to half and with each half solder the wires to the board, one to each of the copper rows and the other to each column as shown in the picture
+![Imgur](https://i.imgur.com/NiF3bXK.jpg)
+![Imgur](https://i.imgur.com/4DXnqu5.jpg)
 
-NOTE: you also make sure the firmware is set up correctly (ex: change row pins with col pins)
+### Pro-micro soldering
+Most of the controllers comes with set of pinheaders, solder them on top of the board.
 
-![Left Wire Diagram](/resources/dactyl_manuform_left_wire_diagram.png)
-
-![Left Wire Diagram](/resources/dactyl_manuform_right_wire_diagram.png)
-
+### Pro-micro and Jack connection
+Once all wires are solderd you just need to plug the jumper wires to the pro-micro correctly
+![Imgur](https://i.imgur.com/SkGqEsF.jpg)
 
 ### Firmware
 
