@@ -6,21 +6,22 @@ keycaps:
   body-height: 7.3  # DSA-profile caps.
   resting-clearance: 6.5  # DSA on Matias switches.
 switches:
-  style: alps
   travel: 3.5
 key-clusters:
   finger:
     matrix-columns:
-    - rows-above-home: 1
+    - rows-above-home: 2
       rows-below-home: 1
-    - rows-above-home: 1
+    - rows-above-home: 2
       rows-below-home: 2
-    - rows-above-home: 1
+    - rows-above-home: 2
       rows-below-home: 3
+    - rows-above-home: 2
+      rows-below-home: 2
     - rows-above-home: 1
       rows-below-home: 2
-    - rows-below-home: 2
-    - rows-below-home: 2
+    - rows-above-home: 1
+      rows-below-home: 2
     aliases:
       f0: [0, first]
       f1: [1, first]
@@ -32,7 +33,7 @@ key-clusters:
   thumb:
     position:
       key-alias: f1
-      offset: [-10, -18, 2]
+      offset: [-20, -18, -20]
     matrix-columns:
     - rows-above-home: 1
     - rows-above-home: 1
@@ -48,7 +49,7 @@ key-clusters:
   aux0:
     position:
       key-alias: f2
-      offset: [-18, -38, -26]
+      offset: [-18, -15, -40]
     matrix-columns:
     - rows-above-home: 0
     aliases:
@@ -81,15 +82,15 @@ by-key:
               row: 0
               column: 0
           pitch:
-            base: 0.26
-            progressive: 0.45
+            base: 0.16
+            progressive: 0.35
           roll:
-            base: 0.22
+            base: 0.92
             progressive: 0.06
           yaw:
             base: 0.03
           translation:
-            late: [0, 0, 12]
+            late: [0, 0, 60]
       columns:
         "0":
           parameters:
@@ -276,13 +277,13 @@ by-key:
             separation:
               column: 0
           roll:
-            base: -1.2
+            base: -0.8
             progressive: 0.3
           pitch:
-            base: -0.6
+            base: 0.8
             progressive: 0.3
           yaw:
-            base: 1.2
+            base: 0.2
         wall:
           north:
             extent: 1
@@ -382,8 +383,8 @@ by-key:
           west:
             extent: 0
 case:
-  key-mount-thickness: 4
-  web-thickness: 4
+  key-mount-thickness: 2.5
+  web-thickness: 2.5
   rear-housing:
     include: true
     west-foot: true
