@@ -59,6 +59,12 @@
 (def cornerrow (dec lastrow))
 (def lastcol (dec ncols))
 
+;;;;;;;;;;;;;;;;;;
+;; Bottom Plate ;;
+;;;;;;;;;;;;;;;;;;
+
+(def bottom-plate-thickness 4)
+
 ;;;;;;;;;;;;;;;;;
 ;; Switch Hole ;;
 ;;;;;;;;;;;;;;;;;
@@ -742,16 +748,45 @@
                                 ; wire-posts
                   )))
 
+(def bottom-plate-outline (cut
+                           (translate [0 0 -0.1]
+                                      (union case-walls
+                                             screw-insert-outers))
+                           ))
+
+(def x-square (square 200 0.01 :center false))
+(def y-square (square 0.01 200 :center false))
+
+(def bottom-plate
+  (intersection
+   (minkowski
+    bottom-plate-outline
+    x-square)
+   (minkowski
+    bottom-plate-outline
+    (project
+     (mirror [1 0 0]
+             (extrude-linear {:height 1}
+                             x-square))))
+   (minkowski
+    bottom-plate-outline
+    y-square)
+   (minkowski
+    bottom-plate-outline
+    (project
+     (mirror [0 1 0]
+             (extrude-linear {:height 1}
+                             y-square))))))
+
+(def screw-holes-projection
+  (cut
+   screw-insert-screw-holes))
+
 (spit "things/right-plate.scad"
-      (write-scad 
-                   (cut
-                     (translate [0 0 -0.1]
-                       (difference (union case-walls
-                                          teensy-holder
-                                          ; rj9-holder
-                                          screw-insert-outers)
-                                   (translate [0 0 -10] screw-insert-screw-holes))
-                  ))))
+      (write-scad (extrude-linear {:height bottom-plate-thickness}
+                                  (difference
+                                   bottom-plate
+                                   screw-holes-projection))))
 
 (spit "things/test.scad"
       (write-scad 
